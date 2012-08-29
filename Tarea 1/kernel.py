@@ -1,4 +1,4 @@
-import time
+import time , sys
 from scheduler import Scheduler
 from process import Process
 
@@ -8,14 +8,28 @@ class Kernel:
 		self.scheduler = Scheduler()
 		self.running = True
 
-	def run(self):
-		i=1
+	def run(self,backend_conn,connQueue):
+		self.i=0
 		while self.running:
-			print i
-			i += 1
+			#print str(self.i)
+			self.scheduler.run(self.i)
+			self.checkInput(self.i,connQueue)
+			self.i += 1
 			time.sleep(1)
 
-	def readFile(self):
+	def checkInput(self,time, connQueue):
+		try:
+			input = connQueue.get_nowait()
+		except Exception:
+			return
+
+		if(input != None):
+			if(input == "read"):
+				self.readFile(time)
+			elif(input == "quit" ):
+				self.running = False
+
+	def readFile(self,time):
 		with open('test.txt', 'r') as file:
 			process_list = []
 			for line in file:
@@ -45,9 +59,7 @@ class Kernel:
 					process = Process( split[0], split[2], split[3] )
 
 				process_list.append(process)
-				
-			for p in process_list:
-				print str( p.getId() )+": "+p.getName()
 
-kernel = Kernel()
-kernel.readFile()
+			for p in process_list:
+				self.scheduler.schedule(time,p,1)
+
