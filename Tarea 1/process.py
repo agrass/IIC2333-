@@ -41,7 +41,8 @@ class Process:
 		line = self.spaceFill(str(self.id), 3) + " " 
 		line += self.spaceFill(str(self.priority), 3) + " "
 		line += self.spaceFill(status, 4) + " " 
-		line += self.spaceFill(str(self.type), 4)
+		line += self.spaceFill(str(self.type), 4) + " "
+		line += str(self.name)
 		print line
 
 	def spaceFill(self, word, length):

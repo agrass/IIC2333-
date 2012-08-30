@@ -25,6 +25,7 @@ class KernelConsole:
 
 	def printMenu(self):
 		print "\n###########	MENU  ########### \n"
+		print "menu: Imprimir Menu"
 		print "top: Funcion TOP"
 		print "read: Cargar Archivo"
 		print "1: Llamar"
@@ -41,8 +42,11 @@ class KernelConsole:
 			input = raw_input()
 			connQueue.put("terminateTop")
 			self.readingInput = True
-
-		if(input == "read"):
+			self.clear()
+			self.printMenu()
+		if(input == "menu"):
+			self.printMenu()
+		elif(input == "read"):
 			connQueue.put("read")
 		elif(input == "top"):
 			self.readingInput = False

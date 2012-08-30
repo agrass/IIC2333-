@@ -39,7 +39,9 @@ class Kernel:
 	def top(self):
 		os.system('cls' if os.name=='nt' else 'clear')
 		char_matrix = []
-		print "PID PRI STAT TYPE"
+		print "Time: "+ str(self.i)
+		print
+		print "PID PRI STAT TYPE NAME"
 		self.scheduler.printProcesses()
 		print "\nPress enter to stop..."
 		
@@ -77,4 +79,6 @@ class Kernel:
 
 			for p in process_list:
 				self.scheduler.schedule(time,p,1)
+
+			print "> Read file test.txt"
 
