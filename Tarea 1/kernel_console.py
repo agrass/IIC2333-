@@ -36,11 +36,16 @@ class KernelConsole:
 
 	def readInput(self, frontend_conn,connQueue):
 		if(self.readingInput):
-			input = raw_input("Input :")
+			input = raw_input("Input: ")
+		else:
+			input = raw_input()
+			connQueue.put("terminateTop")
+			self.readingInput = True
 
 		if(input == "read"):
 			connQueue.put("read")
 		elif(input == "top"):
+			self.readingInput = False
 			connQueue.put("top")
 		elif(input == "q"):
 			connQueue.put("quit")
