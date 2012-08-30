@@ -40,6 +40,8 @@ class KernelConsole:
 
 		if(input == "read"):
 			connQueue.put("read")
+		elif(input == "top"):
+			connQueue.put("top")
 		elif(input == "q"):
 			connQueue.put("quit")
 			self.running = False

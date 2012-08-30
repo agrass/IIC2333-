@@ -35,3 +35,21 @@ class Process:
 
 	def runTimer(self):
 		self.timer -= 1
+
+	# For top function
+	def printProcess(self, status):
+		line = self.spaceFill(str(self.id), 3) + " " 
+		line += self.spaceFill(str(self.priority), 3) + " "
+		line += self.spaceFill(status, 4) + " " 
+		line += self.spaceFill(str(self.type), 4)
+		print line
+
+	def spaceFill(self, word, length):
+		lineArray = [" "]*length
+		offset = length - len(word)
+		for i in range(len(word)):
+			if(i < len(word)):
+				lineArray[offset + i] = word[i]
+
+		return "".join(lineArray)
+		

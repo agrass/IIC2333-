@@ -37,8 +37,8 @@ class Scheduler:
 				else:
 					flag = False
 
-		except IndexError: 
-  				pass
+		except IndexError:
+			pass
 
 	def processRunning(self,time):
 
@@ -59,4 +59,11 @@ class Scheduler:
 				print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
-  				pass
+				pass
+
+	def printProcesses(self):
+		if(self.running != None):
+			self.running.printProcess("RUN")
+		for item in self.ready:
+			#print item
+			item[1].printProcess("RDY")

@@ -7,6 +7,7 @@ class Kernel:
 	def __init__(self):
 		self.scheduler = Scheduler()
 		self.running = True
+		self.topActive = False
 
 	def run(self,backend_conn,connQueue):
 		self.i=0
@@ -26,8 +27,16 @@ class Kernel:
 		if(input != None):
 			if(input == "read"):
 				self.readFile(time)
+			elif(input == "top"):
+				self.top()
 			elif(input == "quit" ):
 				self.running = False
+
+	def top(self):
+		self.topActive = True
+		char_matrix = []
+		print "PID PRI STAT TYPE"
+		self.scheduler.printProcesses()
 
 	def readFile(self,time):
 		with open('test.txt', 'r') as file:
