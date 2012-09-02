@@ -1,4 +1,4 @@
-import time , sys
+import time , sys, os
 from scheduler import Scheduler
 from process import Process
 
@@ -7,6 +7,7 @@ class Kernel:
 	def __init__(self):
 		self.scheduler = Scheduler()
 		self.running = True
+		self.topActive = False
 
 	def run(self,backend_conn,connQueue):
 		self.i=0
@@ -15,6 +16,8 @@ class Kernel:
 			self.scheduler.run(self.i)
 			self.checkInput(self.i,connQueue)
 			self.i += 1
+			if(self.topActive == True):
+				self.top()
 			time.sleep(1)
 
 	def checkInput(self,time, connQueue):
@@ -26,8 +29,22 @@ class Kernel:
 		if(input != None):
 			if(input == "read"):
 				self.readFile(time)
+			elif(input == "top"):
+				self.topActive = True
+			elif(input == "terminateTop"):
+				self.topActive = False
 			elif(input == "quit" ):
 				self.running = False
+
+	def top(self):
+		os.system('cls' if os.name=='nt' else 'clear')
+		char_matrix = []
+		print "Time: "+ str(self.i)
+		print
+		print "PID PRI STAT TYPE NAME"
+		self.scheduler.printProcesses()
+		print "\nPress enter to stop..."
+		
 
 	def readFile(self,time):
 		with open('test.txt', 'r') as file:
@@ -62,4 +79,6 @@ class Kernel:
 
 			for p in process_list:
 				self.scheduler.schedule(time,p,1)
+
+			print "> Read file test.txt"
 

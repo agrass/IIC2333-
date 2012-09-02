@@ -16,7 +16,7 @@ class Scheduler:
 		self.finish = []
 
 	def schedule(self, time, process , delay):
-		print str(time) +": to new " + str( process.getId() ) + " > " + process.getName()
+		# print str(time) +": to new " + str( process.getId() ) + " > " + process.getName()
 		heapq.heappush(self.new, (time+delay, process) )
 
 	def run(self,time):
@@ -33,12 +33,12 @@ class Scheduler:
 				if( first[0] == time ):
 					process = heapq.heappop(self.new)[1]
 					heapq.heappush(self.ready, (process.getPriority() , process) )
-					print str(time) +": to ready " + str( process.getId() ) + " > " + process.getName()
+					# print str(time) +": to ready " + str( process.getId() ) + " > " + process.getName()
 				else:
 					flag = False
 
-		except IndexError: 
-  				pass
+		except IndexError:
+			pass
 
 	def processRunning(self,time):
 
@@ -48,7 +48,7 @@ class Scheduler:
 			#finish process
 			if(self.running.timer == 0):
 				self.finish.append(self.running)
-				print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
+				# print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
 				self.running = None
 
 	def processReady(self,time):
@@ -56,7 +56,14 @@ class Scheduler:
 			try:
 				process = heapq.heappop(self.ready)[1]
 				self.running = process
-				print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
+				# print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
-  				pass
+				pass
+
+	def printProcesses(self):
+		if(self.running != None):
+			self.running.printProcess("RUN")
+		for item in self.ready:
+			#print item
+			item[1].printProcess("RDY")
