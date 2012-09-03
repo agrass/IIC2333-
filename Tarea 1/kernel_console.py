@@ -7,6 +7,7 @@ class KernelConsole:
 		self.running = True
 		self.readingInput = True
 		self.writingContact = False
+		self.hllamada = False
 
 	def run(self, frontend_conn,connQueue):
 
@@ -44,10 +45,13 @@ class KernelConsole:
 		
 		contactInput=None
 		input = None
+		numero = None
 		if(self.readingInput):
 			input = raw_input("Input: ")
 		elif(self.writingContact):
 			contactInput = raw_input("Enter Contact (name;number): ")
+		elif(self.hllamada):
+			numero = raw_input("Ingrese numero: ")
 		else:
 			input = raw_input()
 			input = ""
@@ -77,6 +81,15 @@ class KernelConsole:
 		elif(input == "q"):
 			connQueue.put("quit")
 			self.running = False
+		elif(input == '1'):
+			connQueue.put('hacer_llamada')
+			backend_msg = frontend_conn.recv()
+			self.hllamada = True
+			self.readingInput = False
+		if(numero != None):
+			connQueue.put ("hllamada_input"+numero)
+			self.hllamada = False
+			self.readingInput = True
 
 		if (contactInput != None):
 			connQueue.put( "new_contact_input;"+contactInput )
