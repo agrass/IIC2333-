@@ -55,13 +55,24 @@ class Kernel:
 				self.readContactList(time)
 			elif(input == "new_contact"):
 				self.newContact(time)
+			elif(input == "hacer_llamada"):
+				self.hacerLlamada(time)
 			elif( input.startswith("new_contact_input") ):
 				split = input.split(";")
 				contactName =  split[1].rstrip('\r\n')
 				contactNumber = split[2].rstrip('\r\n')
 				self.scheduler.newContactInput(time,contactName,contactNumber)
+			elif(input == "calls_history"):
+				self.callsHistory()
+			elif(input == "messages_history"):
+				self.messagesHistory()
+			elif(input.startswith('hllamada_input')):
+				split = input.split(';')
+				numero = split[1]
+				self.scheduler.llamar(time,numero)
 			elif(input == "quit" ):
 				self.running = False
+			
 				
 	def hacerLlamada(self,time):
 		print "Waiting to make call..."
@@ -79,6 +90,25 @@ class Kernel:
 	def top(self):
 		os.system('cls' if os.name=='nt' else 'clear')
 		print self.scheduler.printProcesses(self.i)
+
+	def callsHistory(self):
+		os.system('cls' if os.name=='nt' else 'clear')
+		output = "Historial de Llamadas\n"
+		# AQUI HAY QUE IMPRIMIR EL HISTORIAL DE LAS LLAMADAS
+		output += "##### FIN HISTORIAL LLAMADAS #####"
+		print output
+
+	def messagesHistory(self):
+		os.system('cls' if os.name=='nt' else 'clear')
+		output = "Historial de Mensajes\n\n"
+		output += "Mensajes Recibidos:\n\n"
+		# AQUI HAY QUE IMPRIMIR LOS MENSAJES RECIBIDOS
+
+		output += "Mensajes Enviados:\n\n"
+		# AQUI HAY QUE IMPRIMIR LOS MENSAJES ENVIADOS
+
+		output += "##### FIN HISTORIAL MENSAJES #####"
+		print output
 		
 	def readContactList(self,time):
 		os.system('cls' if os.name=='nt' else 'clear')
