@@ -42,14 +42,16 @@ class Process:
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
+		
 	# For top function
 	def printProcess(self, status):
 		line = self.spaceFill(str(self.id), 3) + " " 
 		line += self.spaceFill(str(self.priority), 3) + " "
 		line += self.spaceFill(status, 4) + " " 
 		line += self.spaceFill(str(self.type), 4) + " "
+		line += self.spaceFill(str(self.timer), 4) + " "
 		line += str(self.name)
-		print line
+		return line
 
 	def spaceFill(self, word, length):
 		lineArray = [" "]*length

@@ -50,6 +50,7 @@ class KernelConsole:
 			contactInput = raw_input("Enter Contact (name;number): ")
 		else:
 			input = raw_input()
+			input = ""
 			connQueue.put("terminateTop")
 			self.readingInput = True
 			self.clear()
