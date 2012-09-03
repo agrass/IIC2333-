@@ -1,6 +1,7 @@
 import time , sys, os
 from scheduler import Scheduler
 from process import Process
+from llamar import Llamar
 from store_contact import StoreContact
 from other import Other
 from send_position import SendPosition
@@ -55,7 +56,7 @@ class Kernel:
 				self.readContactList(time)
 			elif(input == "new_contact"):
 				self.newContact(time)
-			elif(input == "hacer_llamada")
+			elif(input == "hacer_llamada"):
 				self.hacerLlamada(time)
 			elif( input.startswith("new_contact_input") ):
 				split = input.split(";")
@@ -65,15 +66,20 @@ class Kernel:
 			elif(input.startswith('hllamada_input')):
 				split = input.split(';')
 				numero = split[1]
-				self.scheduler.llamar(time,numero)
+				tejec = split[2]
+				self.scheduler.llamar(time,numero,tejec)
 			elif(input == "quit" ):
 				self.running = False
-			
+			elif(input == "enviar_msje"):
+				self.enviarMsje(time)
+	def enviarMsje(self,time):
+		print "Waiting to send msge..."
+
 				
 	def hacerLlamada(self,time):
 		print "Waiting to make call..."
-		process = Llamar('hacer_llamada',1,10,"")
-		self.scheduler.schedule(time,process,1)
+		self.processl = Llamar('hacer_llamada',1,10,"")
+		self.scheduler.schedule(time,self.processl,1)
 
 	def newContact(self,time):
 		print "Wating to run new contact ..."

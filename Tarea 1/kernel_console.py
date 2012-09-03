@@ -7,6 +7,8 @@ class KernelConsole:
 		self.running = True
 		self.readingInput = True
 		self.writingContact = False
+		self.hllamada = False
+		self.emsje = False
 
 	def run(self, frontend_conn,connQueue):
 
@@ -44,12 +46,18 @@ class KernelConsole:
 		
 		contactInput=None
 		input = None
+		numero = None
+		fllamada = None
+		msje = None  
+		
 		if(self.readingInput):
 			input = raw_input("Input: ")
 		elif(self.writingContact):
 			contactInput = raw_input("Enter Contact (name;number): ")
 		elif(self.hllamada):
-			numero = raw_input("Ingrese numero: ")
+			numero = raw_input("Ingrese (numero;tiempollamada): ")
+		elif(self.emsje):
+			msje = raw_input("Ingrese numero;msje ")
 		else:
 			input = raw_input()
 			input = ""
@@ -78,17 +86,24 @@ class KernelConsole:
 			self.running = False
 		elif(input == '1'):
 			connQueue.put('hacer_llamada')
-			backend_msg = frontend_conn.recv()
 			self.hllamada = True
 			self.readingInput = False
+		elif(input == '3'):
+			connQueue.put('enviar_msje')
+			self.emsje = True
+			self.readingInput = False
 		if(numero != None):
-			connQueue.put ("hllamada_input"+numero)
+			connQueue.put ("hllamada_input;"+numero)
 			self.hllamada = False
-			self.readingInput = True
+			self.readingInput = False
 
 		if (contactInput != None):
 			connQueue.put( "new_contact_input;"+contactInput )
 			self.writingContact = False
+			self.readingInput = True
+		if(msje != None):
+			connQueue.put("emshe;"+msje)
+			self.emsje = False
 			self.readingInput = True
 
 		time.sleep(1)
