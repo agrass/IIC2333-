@@ -36,4 +36,6 @@ class StoreContact(Process):
 		f.write( self.getContactName() + ":"+self.getContactNumber() )
 		f.write("\n")		
 		f.close() 
+
+		return False
 	

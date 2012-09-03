@@ -3,35 +3,38 @@ from historial import Historial
 import datetime
 
 class Llamar(Process):
-	def __init__(self,name,type,priority,numero):
-		Process.__init__(self,name,type,priority)
+	def __init__(self,name,priority,numero):
+		Process.__init__(self,name,1,priority)
 		self.numero = numero;
 		self.hist = Historial()
+		self.printsOnce = True
 	def setNumero(self,numero):
 		self.numero = numero;
 	def getNumero(self):
 		return self.numero;
-	def setTejec(self, duracion):
-		self.duracion = duracion
 	def runTimer(self):
-		self.tini = datetime.datetime.now()
-		self.timer -= 1
 		if(self.numero == ""):
 			return False
 		else:	
 			if(self.timer>=0):
-				print "Llamando a ...", self.numero
+				self.timer -= 1
+				if(self.printsOnce):
+					print "Llamando a ...", self.numero
+					self.printsOnce = False
 				return True
-			else:
-				return False
 	def setFin(self, fin):
 		self.fin= fin
 	def finish (self,time):
-		Process.finish(self,time)
-		self.tfin=datetime.datetime.now()
-		self.duracion = self.tfin-self.tini
-		print "Llamada finalizada.  Duracion: ", self.duracion
-		self.hist.Actualizar('llamada',self.numero, self.tini)
+		
+		f = open('data/log.txt', 'a')		
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
+		f.write("\n")		
+		f.close() 
+
+		print "Llamada finalizada."
+		self.hist.Actualizar('llamada',self.numero, time)
+		
+		return True
 
 		
 	

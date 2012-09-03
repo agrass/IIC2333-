@@ -42,6 +42,7 @@ class Process:
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
+		return False
 	# For call function
 	def setFin(self,fin):
 		self.fin = fin

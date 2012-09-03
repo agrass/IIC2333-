@@ -8,7 +8,7 @@ class KernelConsole:
 		self.readingInput = True
 		self.writingContact = False
 		self.hllamada = False
-
+		self.waitbackend = False
 		self.emsje = False
 
 
@@ -61,6 +61,11 @@ class KernelConsole:
 			numero = raw_input("Ingrese (numero;tiempollamada): ")
 		elif(self.emsje):
 			msje = raw_input("Ingrese numero;msje ")
+		elif(self.waitbackend):
+			backend_msg = frontend_conn.recv()
+			if(backend_msg == "enable_input"):
+				self.waitbackend = False
+				self.readingInput = True
 		else:
 			input = raw_input()
 			input = ""
@@ -92,6 +97,7 @@ class KernelConsole:
 			self.running = False
 		elif(input == '1'):
 			connQueue.put('hacer_llamada')
+			backend_msg = frontend_conn.recv()
 			self.hllamada = True
 			self.readingInput = False
 		elif(input == '3'):
@@ -103,6 +109,7 @@ class KernelConsole:
 			connQueue.put ("hllamada_input;"+numero)
 			self.hllamada = False
 			self.readingInput = False
+			self.waitbackend = True
 		if (contactInput != None):
 			connQueue.put( "new_contact_input;"+contactInput )
 			self.writingContact = False

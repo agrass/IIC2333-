@@ -19,6 +19,8 @@ class Scheduler:
 		self.waitingForInput = False
 		self.writingInput = False
 
+		self.enableInput=False
+
 	def setAskingForInput(self, value):
 		self.askingForInput = value
 
@@ -35,11 +37,16 @@ class Scheduler:
 		return self.writingInput
 
 	def setWritingInput(self, value):
-		self.writingInput = value	
+		self.writingInput = value
+
+	def getEnableInput(self):
+		return self.enableInput
+
+	def setEnableInput(self, value):
+		self.enableInput = value	
 
 	def schedule(self, time, process , delay):
-
-		# print str(time) +": to new " + str( process.getId() ) + " > " + process.getName()
+		#print str(time) +": to new " + str( process.getId() ) + " > " + process.getName()
 		heapq.heappush(self.new, (time+delay, process) )
 
 	def run(self,time):
@@ -47,6 +54,7 @@ class Scheduler:
 		self.processRunning(time)
 		self.processReady(time)
 		self.processWaiting(time)
+
 	def processNew(self,time):
 		try:
 			flag = True	
@@ -68,11 +76,14 @@ class Scheduler:
 		if(self.running != None):
 			#if false means that needs input
 			if ( self.running.runTimer() == False):
+				# print str(time) +": to waiting " + str( self.running.getId() ) + " > " + self.running.getName()
 				heapq.heappush(self.waiting, (self.running.getPriority() ,  self.running))
 				self.running = None
 			#finish process
 			elif(self.running.timer == 0):
-				self.running.finish(time)
+				#return True if needs enable input
+				if (self.running.finish(time) ):
+					self.enableInput = True
 				self.finish.append(self.running)
 				# print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
 				self.running = None
@@ -124,7 +135,7 @@ class Scheduler:
 			try:
 				process = heapq.heappop(self.ready)[1]
 				self.running = process
-				#print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
+				# print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
 				pass

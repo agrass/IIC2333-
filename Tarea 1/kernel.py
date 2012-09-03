@@ -31,6 +31,11 @@ class Kernel:
 				self.scheduler.setAskingForInput(False)
 				self.scheduler.setWritingInput(True)
 
+			if ( self.scheduler.getEnableInput() ):
+				backend_conn.send("enable_input")
+				self.scheduler.setEnableInput(False)
+
+
 			self.checkInput(self.i,connQueue)
 			self.i += 1
 
@@ -70,7 +75,7 @@ class Kernel:
 			elif(input.startswith('hllamada_input')):
 				split = input.split(';')
 				numero = split[1]
-				tejec = split[2]
+				tejec = int(split[2])
 				self.scheduler.llamar(time,numero,tejec)
 			elif(input == "quit" ):
 				self.running = False
@@ -82,8 +87,8 @@ class Kernel:
 				
 	def hacerLlamada(self,time):
 		print "Waiting to make call..."
-		self.processl = Llamar('hacer_llamada',1,10,"")
-		self.scheduler.schedule(time,self.processl,1)
+		processl = Llamar('hacer_llamada',0,"")
+		self.scheduler.schedule(time, processl,1)
 
 	def newContact(self,time):
 		print "Wating to run new contact ..."
