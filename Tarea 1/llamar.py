@@ -19,14 +19,15 @@ class Llamar(Process):
 		if(self.numero == ""):
 			return False
 		else:	
-			if(self.timer>0):
+			if(self.timer>=0):
 				print "Llamando a ...", self.numero
 				return True
 			else:
 				return False
 	def setFin(self, fin):
 		self.fin= fin
-	def finalizar (self,time):
+	def finish (self,time):
+		Process.finish(self,time)
 		self.tfin=datetime.datetime.now()
 		self.duracion = self.tfin-self.tini
 		print "Llamada finalizada.  Duracion: ", self.duracion
