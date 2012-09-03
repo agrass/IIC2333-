@@ -57,6 +57,11 @@ class Kernel:
 				self.scheduler.newContactInput(time,contactName,contactNumber)
 			elif(input == "quit" ):
 				self.running = False
+				
+	def hacerLlamada(self,time):
+		print "Waiting to make call..."
+		process = Llamar('hacer_llamada',1,10,"")
+		self.scheduler.schedule(time,process,1)
 
 	def newContact(self,time):
 		print "Wating to run new contact ..."
