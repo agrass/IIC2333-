@@ -16,11 +16,14 @@ class Llamar(Process):
 	def runTimer(self):
 		self.tini = datetime.datetime.now()
 		self.timer -= 1
-		print "Llamando a ...", self.numero
-		if(self.timer>0):
-			return True
-		else:
+		if(self.numero == ""):
 			return False
+		else:	
+			if(self.timer>0):
+				print "Llamando a ...", self.numero
+				return True
+			else:
+				return False
 	def setFin(self, fin):
 		self.fin= fin
 	def finalizar (self,time):

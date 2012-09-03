@@ -111,7 +111,7 @@ class Scheduler:
 				first[1].setTimer(tejec)
 				self.askingForInput = False
 				self.writingInput = False
-				process = heappq.heappop(self.waiting)[1]
+				process = heapq.heappop(self.waiting)[1]
 				heapq.heappush(self.ready, (process.getPriority(), process))
 			else:
 				raise IndexError

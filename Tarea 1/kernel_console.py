@@ -8,10 +8,9 @@ class KernelConsole:
 		self.readingInput = True
 		self.writingContact = False
 		self.hllamada = False
-<<<<<<< HEAD
+
 		self.emsje = False
-=======
->>>>>>> 8ad138effbf6fe5c17cf0ed92b93e082ddf8e094
+
 
 	def run(self, frontend_conn,connQueue):
 
