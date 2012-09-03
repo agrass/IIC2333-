@@ -86,6 +86,7 @@ class KernelConsole:
 			backend_msg = frontend_conn.recv()
 			self.hllamada = True
 			self.readingInput = False
+			
 		if(numero != None):
 			connQueue.put ("hllamada_input"+numero)
 			self.hllamada = False
