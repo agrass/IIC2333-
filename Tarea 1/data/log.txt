@@ -1,2 +1,0 @@
-finish : (0) hacer_llamada at time: 16
-finish : (1) hacer_llamada at time: 60
