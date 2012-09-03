@@ -8,6 +8,8 @@ from send_position import SendPosition
 from check_position import CheckPosition
 from play import Play
 from music import Music
+from historial import Historial
+from message import sendMessage
 
 class Kernel:
 
@@ -72,12 +74,19 @@ class Kernel:
 				numero = split[1]
 				tejec = split[2]
 				self.scheduler.llamar(time,numero,tejec)
+			elif(input.startswith('emsje')):
+				split = input.split(';')
+				numero = split [1]
+				mensaje = split [2]
+				self.scheduler.mensaje(time,numero,mensaje)
 			elif(input == "quit" ):
 				self.running = False
 			elif(input == "enviar_msje"):
 				self.enviarMsje(time)
 	def enviarMsje(self,time):
 		print "Waiting to send msge..."
+		process = sendMessage(0,"","")
+		self.scheduler.schedule(time,process,1)
 
 				
 	def hacerLlamada(self,time):
@@ -99,10 +108,11 @@ class Kernel:
 
 	def callsHistory(self):
 		os.system('cls' if os.name=='nt' else 'clear')
-		output = "Historial de Llamadas\n"
-		# AQUI HAY QUE IMPRIMIR EL HISTORIAL DE LAS LLAMADAS
-		output += "##### FIN HISTORIAL LLAMADAS #####"
-		print output
+		print "Historial de Llamadas\n"
+		hist = Historial()
+		hist.verHistorial()
+		print  "\r\n \r\n ##### FIN HISTORIAL LLAMADAS ##### \r\n \r\n"
+		
 
 	def messagesHistory(self):
 		os.system('cls' if os.name=='nt' else 'clear')
@@ -110,11 +120,10 @@ class Kernel:
 		output += "Mensajes Recibidos:\n\n"
 		# AQUI HAY QUE IMPRIMIR LOS MENSAJES RECIBIDOS
 
-		output += "Mensajes Enviados:\n\n"
-		# AQUI HAY QUE IMPRIMIR LOS MENSAJES ENVIADOS
-
-		output += "##### FIN HISTORIAL MENSAJES #####"
-		print output
+		print "Historial de Mensajes Enviados\n"
+		hist = Historial()
+		hist.verHistorialMsge()
+		print  "\r\n \r\n ##### FIN HISTORIAL MENSAJES ENVIADOS ##### \r\n \r\n"
 		
 	def readContactList(self,time):
 		os.system('cls' if os.name=='nt' else 'clear')
