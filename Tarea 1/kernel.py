@@ -57,8 +57,8 @@ class Kernel:
 				self.newContact(time)
 			elif( input.startswith("new_contact_input") ):
 				split = input.split(";")
-				contactName =  split[1].strip()
-				contactNumber = split[2].strip()
+				contactName =  split[1].rstrip('\r\n')
+				contactNumber = split[2].rstrip('\r\n')
 				self.scheduler.newContactInput(time,contactName,contactNumber)
 			elif(input == "quit" ):
 				self.running = False
@@ -71,8 +71,8 @@ class Kernel:
 	def newContact(self,time):
 		print "Wating to run new contact ..."
 		
-		# 5 default priority
-		process = StoreContact ( 5 , "nuevo_contacto" , "" , "" )
+		# 1 default priority
+		process = StoreContact ( 1 , "nuevo_contacto" , "" , "" )
 		# 0 delay
 		self.scheduler.schedule(time,process,1)
 
@@ -109,7 +109,7 @@ class Kernel:
 				elif process_type == "4":
 					process = Process( split[0], split[2], split[3] )
 				elif process_type == "5":
-					process = StoreContact ( split[3] , split[0] , split[4] , split[5] )
+					process = StoreContact ( split[3] , split[0] , split[4].rstrip('\r\n') , split[5].rstrip('\r\n') )
 				elif process_type == "6":
 					process = Other( split[3] , split[0] , split[4])
 				elif process_type == "7":
