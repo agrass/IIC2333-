@@ -55,13 +55,20 @@ class Kernel:
 				self.readContactList(time)
 			elif(input == "new_contact"):
 				self.newContact(time)
+			elif(input == "hacer_llamada")
+				self.hacerLlamada(time)
 			elif( input.startswith("new_contact_input") ):
 				split = input.split(";")
 				contactName =  split[1].rstrip('\r\n')
 				contactNumber = split[2].rstrip('\r\n')
 				self.scheduler.newContactInput(time,contactName,contactNumber)
+			elif(input.startswith('hllamada_input')):
+				split = input.split(';')
+				numero = split[1]
+				self.scheduler.llamar(time,numero)
 			elif(input == "quit" ):
 				self.running = False
+			
 				
 	def hacerLlamada(self,time):
 		print "Waiting to make call..."
