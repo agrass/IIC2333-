@@ -68,9 +68,12 @@ class KernelConsole:
 		elif(input == "6"):
 			connQueue.put("new_contact")
 			backend_msg = frontend_conn.recv()
-
 			self.writingContact = True
 			self.readingInput = False
+		elif(input == "7"):
+			connQueue.put("calls_history")
+		elif(input == "8"):
+			connQueue.put("messages_history")
 		elif(input == "q"):
 			connQueue.put("quit")
 			self.running = False

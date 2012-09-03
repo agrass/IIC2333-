@@ -1,4 +1,12 @@
-finish : 0: hacer_llamada at time: 9
-finish : 1: recibir_llamada at time: 14
-finish : 2: recibir_mensajes at time: 19
-finish : 4: recibir_llamada at time: 24
+finish : 0: hacer_llamada at time: 10
+finish : 1: recibir_llamada at time: 16
+finish : 4: recibir_llamada at time: 21
+finish : 2: recibir_mensajes at time: 26
+finish : 3: recibir_mensajes at time: 31
+finish : 5: enviar_mensajes at time: 36
+finish : (11) nuevo_contacto at time: 41
+finish : 6: recibir_mensajes at time: 46
+finish : 10: recibir_llamada at time: 51
+finish : (7) nuevo_contacto at time: 56
+finish : 8: angry_birds at time: 61
+finish : 9: musica at time: 66

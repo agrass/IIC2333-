@@ -55,6 +55,10 @@ class Kernel:
 				contactName =  split[1]
 				contactNumber = split[2]
 				self.scheduler.newContactInput(time,contactName,contactNumber)
+			elif(input == "calls_history"):
+				self.callsHistory()
+			elif(input == "messages_history"):
+				self.messagesHistory()
 			elif(input == "quit" ):
 				self.running = False
 				
@@ -74,6 +78,25 @@ class Kernel:
 	def top(self):
 		os.system('cls' if os.name=='nt' else 'clear')
 		print self.scheduler.printProcesses(self.i)
+
+	def callsHistory(self):
+		os.system('cls' if os.name=='nt' else 'clear')
+		output = "Historial de Llamadas\n"
+		# AQUI HAY QUE IMPRIMIR EL HISTORIAL DE LAS LLAMADAS
+		output += "##### FIN HISTORIAL LLAMADAS #####"
+		print output
+
+	def messagesHistory(self):
+		os.system('cls' if os.name=='nt' else 'clear')
+		output = "Historial de Mensajes\n\n"
+		output += "Mensajes Recibidos:\n\n"
+		# AQUI HAY QUE IMPRIMIR LOS MENSAJES RECIBIDOS
+
+		output += "Mensajes Enviados:\n\n"
+		# AQUI HAY QUE IMPRIMIR LOS MENSAJES ENVIADOS
+
+		output += "##### FIN HISTORIAL MENSAJES #####"
+		print output
 		
 	def readContactList(self,time):
 		os.system('cls' if os.name=='nt' else 'clear')
