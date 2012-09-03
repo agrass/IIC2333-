@@ -1,4 +1,0 @@
-
-34,asd,llamada
-16,12312,llamada
-60,523423,llamada

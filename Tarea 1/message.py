@@ -39,6 +39,7 @@ class sendMessage(Process):
 		self.message = message
 		self.numero = numero
 		self.timer = 20*len(message)
+		self.printOnce=True
 	def setNumero(self,numero):
 		self.numero = numero
 	def getNumero(self):
@@ -51,17 +52,23 @@ class sendMessage(Process):
 			return False
 		else:
 			if(self.timer>=0):
-				print 'hola'
+				if(self.printOnce):
+					print "Enviando mensaje ..."
+					self.printOnce = False
 				self.timer -=1
 				return True
 			else:
 				return False
     #guardar output message  
 	def finish (self, time):
-		Process.finish(self,time)
+		f = open('data/log.txt', 'a')		
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
+		f.write("\n")		
+		f.close() 
 		print "Mensaje enviado!"
 		tiempo = datetime.datetime.now()
 		self.saveMessage(tiempo)
+		return True
 	def saveMessage(self,tiempo):		
 		f = open('data/sent_messages.txt', 'a+')		
 		f.write(str(tiempo)+' '+str(self.numero)+' '+str(self.message))

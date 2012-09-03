@@ -34,13 +34,11 @@ class KernelConsole:
 		print "top: Funcion TOP"
 		print "read: Cargar Archivo"
 		print "1: Llamar"
-		print "2: Recibir Llamada"
-		print "3: Enviar Mensaje"
-		print "4: Recibir Mensaje"
-		print "5: Ver Agenda de Contactos"
-		print "6: Agregar Nuevo Contacto"
-		print "7: Ver Historial de Llamadas"
-		print "8: Ver Historial de Mensajes"
+		print "2: Enviar Mensaje"
+		print "3: Ver Agenda de Contactos"
+		print "4: Agregar Nuevo Contacto"
+		print "5: Ver Historial de Llamadas"
+		print "6: Ver Historial de Mensajes"
 		print "q: Salir"
 		print
 
@@ -81,16 +79,16 @@ class KernelConsole:
 		elif(input == "top"):
 			self.readingInput = False
 			connQueue.put("top")
-		elif(input == "5"):
+		elif(input == "3"):
 			connQueue.put("contact_list")
-		elif(input == "6"):
+		elif(input == "4"):
 			connQueue.put("new_contact")
 			backend_msg = frontend_conn.recv()
 			self.writingContact = True
 			self.readingInput = False
-		elif(input == "7"):
+		elif(input == "5"):
 			connQueue.put("calls_history")
-		elif(input == "8"):
+		elif(input == "6"):
 			connQueue.put("messages_history")
 		elif(input == "q"):
 			connQueue.put("quit")
@@ -100,7 +98,7 @@ class KernelConsole:
 			backend_msg = frontend_conn.recv()
 			self.hllamada = True
 			self.readingInput = False
-		elif(input == '3'):
+		elif(input == '2'):
 			connQueue.put('enviar_msje')
 			backend_msg = frontend_conn.recv()
 			self.emsje = True
@@ -117,8 +115,8 @@ class KernelConsole:
 			self.readingInput = True
 		if(msje != None):
 			connQueue.put("emsje;"+msje)
-			
 			self.emsje = False
-			self.readingInput = True
+			self.readingInput = False
+			self.waitbackend=True
 
 		time.sleep(1)
