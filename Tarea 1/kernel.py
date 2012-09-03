@@ -1,6 +1,7 @@
 import time , sys, os
 from scheduler import Scheduler
 from process import Process
+from store_contact import StoreContact
 
 class Kernel:
 
@@ -14,10 +15,22 @@ class Kernel:
 		while self.running:
 			#print str(self.i)
 			self.scheduler.run(self.i)
+			
+			if(self.scheduler.getAskingForInput() ):
+				self.scheduler.setWaitingForInput(True)
+
+			if(self.scheduler.getWaitingForInput()):
+				backend_conn.send("readyForInput")
+				self.scheduler.setWaitingForInput(False)
+				self.scheduler.setAskingForInput(False)
+				self.scheduler.setWritingInput(True)
+
 			self.checkInput(self.i,connQueue)
 			self.i += 1
+
 			if(self.topActive == True):
 				self.top()
+			
 			time.sleep(1)
 
 	def checkInput(self,time, connQueue):
@@ -33,8 +46,25 @@ class Kernel:
 				self.topActive = True
 			elif(input == "terminateTop"):
 				self.topActive = False
+			elif(input == "contact_list"):
+				self.readContactList(time)
+			elif(input == "new_contact"):
+				self.newContact(time)
+			elif( input.startswith("new_contact_input") ):
+				split = input.split(";")
+				contactName =  split[1]
+				contactNumber = split[2]
+				self.scheduler.newContactInput(time,contactName,contactNumber)
 			elif(input == "quit" ):
 				self.running = False
+
+	def newContact(self,time):
+		print "Wating to run new contact ..."
+		
+		# 5 default priority
+		process = StoreContact ( 5 , "nuevo_contacto" , "" , "" )
+		# 0 delay
+		self.scheduler.schedule(time,process,1)
 
 	def top(self):
 		os.system('cls' if os.name=='nt' else 'clear')
@@ -45,14 +75,24 @@ class Kernel:
 		self.scheduler.printProcesses()
 		print "\nPress enter to stop..."
 		
+	def readContactList(self,time):
+		os.system('cls' if os.name=='nt' else 'clear')
+		print "CONTACTS"
+		print
+		with open('data/contact_list.txt', 'r') as file:
+			for line in file:
+				print line
 
 	def readFile(self,time):
 		with open('test.txt', 'r') as file:
-			process_list = []
 			for line in file:
 
 				split = line.split(";")
+
+				process = None
+
 				process_type =  split[2]
+				delay = split[1]
 
 				if   process_type == "1":
 					process = Process( split[0], split[2], split[3] )
@@ -63,7 +103,7 @@ class Kernel:
 				elif process_type == "4":
 					process = Process( split[0], split[2], split[3] )
 				elif process_type == "5":
-					process = Process( split[0], split[2], split[3] )
+					process = StoreContact ( split[3] , split[0] , split[4] , split[5] )
 				elif process_type == "6":
 					process = Process( split[0], split[2], split[3] )
 				elif process_type == "7":
@@ -74,11 +114,10 @@ class Kernel:
 					process = Process( split[0], split[2], split[3] )
 				elif process_type == "10":
 					process = Process( split[0], split[2], split[3] )
+				
+				if(process != None):
+					self.scheduler.schedule(time,process,delay)
 
-				process_list.append(process)
-
-			for p in process_list:
-				self.scheduler.schedule(time,p,1)
 
 			print "> Read file test.txt"
 

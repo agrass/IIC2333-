@@ -21,7 +21,7 @@ class receiveMessage(Process):
 	def __init__(self, priority, message= ""):
 		Process.__init__(self, 'Recive Message', 4, priority)
 		self.message = message
-		self.timer = 20*len(message)
+		self.timer = 20 * len(message)
 		self.saveMessage()
     #guardar output message    
 	def saveMessage(self):		

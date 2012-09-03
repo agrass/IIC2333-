@@ -1,4 +1,5 @@
 from process import Process
+
 class Llamar(Process):
 	def __init__(self,name,type,priority,numero,tejec):
 		Process.init(self,name,type,priority)

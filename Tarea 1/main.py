@@ -11,6 +11,17 @@ if __name__ == "__main__":
 	def runConsole():
 		pass
 
+	#Clear todo
+	with open("data/log.txt", "w") as file:
+		file.truncate()
+	with open("data/contact_list.txt", "w") as file:
+		file.truncate()
+	with open("data/received_messages.txt", "w") as file:
+		file.truncate()
+	with open("data/sent_messages.txt", "w") as file:
+		file.truncate()
+
+
 	#Objetos para comunicar front y back
 	backend_conn, frontend_conn = multiprocessing.Pipe()
 	connQueue = multiprocessing.Queue()

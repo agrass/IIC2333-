@@ -35,7 +35,13 @@ class Process:
 
 	def runTimer(self):
 		self.timer -= 1
+		return True
 
+	def finish(self,time):
+		f = open('data/log.txt', 'a')		
+		f.write("finish : " + str(self.getId()) + ": "+ self.getName() + " at time: "+ str(time) )
+		f.write("\n")		
+		f.close() 
 	# For top function
 	def printProcess(self, status):
 		line = self.spaceFill(str(self.id), 3) + " " 
