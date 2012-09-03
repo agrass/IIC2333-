@@ -103,6 +103,20 @@ class Scheduler:
 
 		except IndexError: 
 				print "Super Error"
+	def llamar(self,time,numero,tejec):
+		try:
+			first = self.waiting[0]
+			if(first[1].getType()==1):
+				first[1].setNumero(numero)
+				first[1].setTimer(tejec)
+				self.askingForInput = False
+				self.writingInput = False
+				process = heapq.heappop(self.waiting)[1]
+				heapq.heappush(self.ready, (process.getPriority(), process))
+			else:
+				raise IndexError
+		except IndexError:
+			print "Error"
 
 
 	def processReady(self,time):

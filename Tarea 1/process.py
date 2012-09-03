@@ -22,10 +22,10 @@ class Process:
 		return self.type
 
 	def getTimer(self):
-		return self.timer
+		return int(self.timer)
 
 	def setTimer(self,value):
-		self.timer = value
+		self.timer = int(value)
 
 	def getPriority(self):
 		return self.priority
@@ -42,6 +42,9 @@ class Process:
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
+	# For call function
+	def setFin(self,fin):
+		self.fin = fin
 		
 	# For top function
 	def printProcess(self, status):
