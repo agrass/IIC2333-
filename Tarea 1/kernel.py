@@ -150,7 +150,7 @@ class Kernel:
 				process_type =  split[2]
 				delay = int(split[1])
 
-				if   process_type == "1":
+				if process_type == "1":
 					process = Process( split[0], split[2], split[3] )
 				elif process_type == "2":
 					process = Process( split[0], split[2], split[3] )

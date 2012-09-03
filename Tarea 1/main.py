@@ -20,6 +20,8 @@ if __name__ == "__main__":
 		file.truncate()
 	with open("data/sent_messages.txt", "w") as file:
 		file.truncate()
+	with open("data/historial.txt", "w") as file:
+		file.truncate()
 
 
 	#Objetos para comunicar front y back

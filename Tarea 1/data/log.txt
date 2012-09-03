@@ -1,2 +1,0 @@
-finish : (0) Send Message at time: 30
-finish : (1) nuevo_contacto at time: 71
