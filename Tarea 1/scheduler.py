@@ -76,6 +76,11 @@ class Scheduler:
 				self.finish.append(self.running)
 				# print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
 				self.running = None
+			elif(len(self.ready) != 0):
+				# Context change
+				if(self.ready[0][1].getPriority() < self.running.getPriority()):
+					heapq.heappush(self.ready, (self.running.getPriority(), self.running))
+					self.running = heapq.heappop(self.ready)[1]
 
 	def processWaiting(self,time):
 		try:
@@ -124,7 +129,7 @@ class Scheduler:
 			try:
 				process = heapq.heappop(self.ready)[1]
 				self.running = process
-				#print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
+				# print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
 				pass
