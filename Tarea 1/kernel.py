@@ -92,7 +92,7 @@ class Kernel:
 				process = None
 
 				process_type =  split[2]
-				delay = split[1]
+				delay = int(split[1])
 
 				if   process_type == "1":
 					process = Process( split[0], split[2], split[3] )
