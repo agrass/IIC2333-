@@ -8,10 +8,4 @@ recibir_mensajes;15;4;2;2277567;Bien y tu?
 nuevo_contacto;16;5;6;Diego Alvarez;2277567
 angry_birds;17;9;8;60
 musica;18;10;8;30
-recibir_llamada;20;2;0;2277567;15
-recibir_llamada;21;2;0;2277567;15
-enviar_mensajes;22;3;2;2277567;Como va?
-recibir_mensajes;23;4;2;2277567;Bien y tu?
-recibir_llamada;24;2;0;2277567;15
-enviar_mensajes;25;3;2;2277567;Como va?
-recibir_mensajes;26;4;2;2277567;Bien y tu?
+recibir_llamada;40;2;0;2277567;15
