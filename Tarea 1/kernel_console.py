@@ -96,6 +96,7 @@ class KernelConsole:
 			self.readingInput = False
 		elif(input == '3'):
 			connQueue.put('enviar_msje')
+			backend_msg = frontend_conn.recv()
 			self.emsje = True
 			self.readingInput = False
 		if(numero != None):
@@ -108,7 +109,8 @@ class KernelConsole:
 			self.writingContact = False
 			self.readingInput = True
 		if(msje != None):
-			connQueue.put("emshe;"+msje)
+			connQueue.put("emsje;"+msje)
+			
 			self.emsje = False
 			self.readingInput = True
 

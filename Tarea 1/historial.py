@@ -12,3 +12,10 @@ class Historial:
 			print linea
 			linea = hist.readline()
 		hist.close();
+	def verHistorialMsge(self):
+		hist = open('data/sent_messages.txt','r')
+		linea = hist.readline()
+		while linea != "":
+			print linea
+			linea = hist.readline()
+		hist.close();

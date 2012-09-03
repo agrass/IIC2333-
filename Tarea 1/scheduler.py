@@ -117,8 +117,20 @@ class Scheduler:
 				raise IndexError
 		except IndexError:
 			print "Error"
-
-
+	def mensaje(self,time,numero,mensaje):
+		try:
+			first = self.waiting[0]
+			if(first [1].getType() == 3):
+				first[1].setNumero(numero)
+				first[1].setMsge(mensaje)
+				self.askingForInput = False
+				self.writingInput = False
+				process = heapq.heappop(self.waiting)[1]
+				heapq.heappush(self.ready, (process.getPriority(), process))
+			else:
+				raise IndexError
+		except IndexError:
+			print "Error"
 	def processReady(self,time):
 		if(self.running == None):
 			try:
