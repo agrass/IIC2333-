@@ -114,9 +114,19 @@ class Scheduler:
 
 			except IndexError: 
 				pass
-	def printProcesses(self):
+
+
+	def printProcesses(self, timer):
+		output = ""
+		output += "Time: "+ str(timer) + "\n"
+		output += "\n"
+		output += "PID PRI STAT TYPE TIME NAME\n"
 		if(self.running != None):
-			self.running.printProcess("RUN")
+			output += self.running.printProcess("RUN") + "\n"
 		for item in self.ready:
-			#print item
-			item[1].printProcess("RDY")
+			output += item[1].printProcess("RDY") + "\n"
+		for item in self.waiting:
+			output += item[1].printProcess("WTN") + "\n"
+
+		output += "\nPress enter to stop..."
+		return output

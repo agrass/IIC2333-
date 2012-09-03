@@ -73,12 +73,7 @@ class Kernel:
 
 	def top(self):
 		os.system('cls' if os.name=='nt' else 'clear')
-		char_matrix = []
-		print "Time: "+ str(self.i)
-		print
-		print "PID PRI STAT TYPE NAME"
-		self.scheduler.printProcesses()
-		print "\nPress enter to stop..."
+		print self.scheduler.printProcesses(self.i)
 		
 	def readContactList(self,time):
 		os.system('cls' if os.name=='nt' else 'clear')
