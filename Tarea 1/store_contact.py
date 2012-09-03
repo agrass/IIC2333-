@@ -33,7 +33,7 @@ class StoreContact(Process):
 		f.close() 
 
 		f = open('data/contact_list.txt', 'a')		
-		f.write( self.getContactName() + " "+self.getContactNumber() )
+		f.write( self.getContactName() + ":"+self.getContactNumber() )
 		f.write("\n")		
 		f.close() 
 	
