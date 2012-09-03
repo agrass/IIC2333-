@@ -7,8 +7,8 @@ class Process:
 		self.id = Process.process_indexer
 		self.name = name
 		self.type = type
-		self.priority = priority
-		self.timer = 5
+		self.priority = int(priority)
+		self.timer = 1
 
 		Process.process_indexer += 1
 		
@@ -39,7 +39,7 @@ class Process:
 
 	def finish(self,time):
 		f = open('data/log.txt', 'a')		
-		f.write("finish : " + str(self.getId()) + ": "+ self.getName() + " at time: "+ str(time) )
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
 	# For top function

@@ -1,0 +1,8 @@
+finish : (0) hacer_llamada at time: 12
+finish : (1) recibir_llamada at time: 16
+finish : (2) recibir_mensajes at time: 17
+finish : (3) recibir_mensajes at time: 20
+finish : (4) recibir_llamada at time: 23
+finish : (5) enviar_mensajes at time: 25
+finish : (6) recibir_mensajes at time: 26
+finish : (7) nuevo_contacto at time: 27

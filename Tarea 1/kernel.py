@@ -2,6 +2,11 @@ import time , sys, os
 from scheduler import Scheduler
 from process import Process
 from store_contact import StoreContact
+from other import Other
+from send_position import SendPosition
+from check_position import CheckPosition
+from play import Play
+from music import Music
 
 class Kernel:
 
@@ -52,8 +57,8 @@ class Kernel:
 				self.newContact(time)
 			elif( input.startswith("new_contact_input") ):
 				split = input.split(";")
-				contactName =  split[1]
-				contactNumber = split[2]
+				contactName =  split[1].strip()
+				contactNumber = split[2].strip()
 				self.scheduler.newContactInput(time,contactName,contactNumber)
 			elif(input == "quit" ):
 				self.running = False
@@ -86,7 +91,8 @@ class Kernel:
 		print
 		with open('data/contact_list.txt', 'r') as file:
 			for line in file:
-				print line
+				sys.stdout.write(line)
+		print
 
 	def readFile(self,time):
 		with open('test.txt', 'r') as file:
@@ -110,15 +116,15 @@ class Kernel:
 				elif process_type == "5":
 					process = StoreContact ( split[3] , split[0] , split[4] , split[5] )
 				elif process_type == "6":
-					process = Process( split[0], split[2], split[3] )
+					process = Other( split[3] , split[0] , split[4])
 				elif process_type == "7":
-					process = Process( split[0], split[2], split[3] )
+					process = SendPosition( split[3] , split[0])
 				elif process_type == "8":
-					process = Process( split[0], split[2], split[3] )
+					process = CheckPosition( split[3] , split[0] , split[4])
 				elif process_type == "9":
-					process = Process( split[0], split[2], split[3] )
+					process = Play( split[3] , split[0] , split[4])
 				elif process_type == "10":
-					process = Process( split[0], split[2], split[3] )
+					process = Music( split[3] , split[0] , split[4])
 				
 				if(process != None):
 					self.scheduler.schedule(time,process,delay)
