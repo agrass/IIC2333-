@@ -8,6 +8,7 @@ from send_position import SendPosition
 from check_position import CheckPosition
 from play import Play
 from music import Music
+from historial import Historial
 
 class Kernel:
 
@@ -99,10 +100,11 @@ class Kernel:
 
 	def callsHistory(self):
 		os.system('cls' if os.name=='nt' else 'clear')
-		output = "Historial de Llamadas\n"
-		# AQUI HAY QUE IMPRIMIR EL HISTORIAL DE LAS LLAMADAS
-		output += "##### FIN HISTORIAL LLAMADAS #####"
-		print output
+		print "Historial de Llamadas\n"
+		hist = Historial()
+		hist.verHistorial()
+		print  "\r\n \r\n ##### FIN HISTORIAL LLAMADAS ##### \r\n \r\n"
+		
 
 	def messagesHistory(self):
 		os.system('cls' if os.name=='nt' else 'clear')
