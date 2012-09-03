@@ -8,7 +8,10 @@ class KernelConsole:
 		self.readingInput = True
 		self.writingContact = False
 		self.hllamada = False
+<<<<<<< HEAD
 		self.emsje = False
+=======
+>>>>>>> 8ad138effbf6fe5c17cf0ed92b93e082ddf8e094
 
 	def run(self, frontend_conn,connQueue):
 
@@ -47,6 +50,7 @@ class KernelConsole:
 		contactInput=None
 		input = None
 		numero = None
+
 		fllamada = None
 		msje = None  
 		
@@ -78,9 +82,12 @@ class KernelConsole:
 		elif(input == "6"):
 			connQueue.put("new_contact")
 			backend_msg = frontend_conn.recv()
-
 			self.writingContact = True
 			self.readingInput = False
+		elif(input == "7"):
+			connQueue.put("calls_history")
+		elif(input == "8"):
+			connQueue.put("messages_history")
 		elif(input == "q"):
 			connQueue.put("quit")
 			self.running = False

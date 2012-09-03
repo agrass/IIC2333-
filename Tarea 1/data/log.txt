@@ -1,0 +1,14 @@
+finish : (0) hacer_llamada at time: 16
+finish : (1) recibir_llamada at time: 20
+finish : (2) recibir_mensajes at time: 21
+finish : (3) recibir_mensajes at time: 24
+finish : (4) recibir_llamada at time: 27
+finish : (5) enviar_mensajes at time: 29
+finish : (6) recibir_mensajes at time: 30
+finish : (7) nuevo_contacto at time: 31
+finish : (8) angry_birds at time: 91
+finish : (10) recibir_llamada at time: 92
+finish : (9) musica at time: 123
+finish : (11) nuevo_contacto at time: 134
+finish : (12) nuevo_contacto at time: 224
+finish : (13) nuevo_contacto at time: 234
