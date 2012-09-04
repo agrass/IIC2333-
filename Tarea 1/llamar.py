@@ -54,8 +54,7 @@ class recibirLlamada(Process):
 		f.close() 
 
 		self.hist.Actualizar('llamada entrante',self.numero, time)
-		
-		return False
+
 
 		
 	

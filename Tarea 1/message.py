@@ -79,6 +79,7 @@ class sendMessage(Process):
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
+
 		tiempo = datetime.datetime.now()
 		self.saveMessage(tiempo)
 		return self.flag

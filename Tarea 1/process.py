@@ -38,10 +38,7 @@ class Process:
 		return True
 
 	def finish(self,time):
-		f = open('data/log.txt', 'a')		
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
-		f.write("\n")		
-		f.close() 
+		self.writeLog("", time)
 		return False
 	# For call function
 	def setFin(self,fin):
@@ -65,4 +62,11 @@ class Process:
 				lineArray[offset + i] = word[i]
 
 		return "".join(lineArray)
+
+	def writeLog(self, comment, time):
+		f = open('data/log.txt', 'a')		
+		f.write(str(time)+ " : " + str(self.getId()) + " - "+ self.getName() + " - " + comment )
+		f.write("\n")		
+		f.close() 
+		
 		
