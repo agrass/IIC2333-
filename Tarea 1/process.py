@@ -6,7 +6,7 @@ class Process:
 
 		self.id = Process.process_indexer
 		self.name = name
-		self.type = type
+		self.type = int(type)
 		self.priority = int(priority)
 		self.timer = 1
 

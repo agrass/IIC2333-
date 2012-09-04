@@ -47,8 +47,6 @@ class KernelConsole:
 		contactInput=None
 		input = None
 		numero = None
-
-		fllamada = None
 		msje = None  
 		
 		if(self.readingInput):

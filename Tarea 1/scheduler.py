@@ -64,7 +64,7 @@ class Scheduler:
 				if( first[0] == time ):
 					process = heapq.heappop(self.new)[1]
 					heapq.heappush(self.ready, (process.getPriority() , process) )
-					# print str(time) +": to ready " + str( process.getId() ) + " > " + process.getName()
+					#print str(time) +": to ready " + str( process.getId() ) + " > " + process.getName()
 				else:
 					flag = False
 
@@ -76,7 +76,7 @@ class Scheduler:
 		if(self.running != None):
 			#if false means that needs input
 			if ( self.running.runTimer() == False):
-				# print str(time) +": to waiting " + str( self.running.getId() ) + " > " + self.running.getName()
+				#print str(time) +": to waiting " + str( self.running.getId() ) + " > " + self.running.getName()
 				heapq.heappush(self.waiting, (self.running.getPriority() ,  self.running))
 				self.running = None
 			#finish process
@@ -85,7 +85,7 @@ class Scheduler:
 				if (self.running.finish(time) ):
 					self.enableInput = True
 				self.finish.append(self.running)
-				# print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
+				#print str(time) +": to finish " + str( self.running.getId() ) + " > " + self.running.getName()
 				self.running = None
 			elif(len(self.ready) != 0):
 				# Context change
@@ -118,10 +118,11 @@ class Scheduler:
 				raise IndexError
 
 		except IndexError: 
-				print "Super Error"
+				print "Error"
 	def llamar(self,time,numero,tejec):
 		try:
 			first = self.waiting[0]
+
 			if(first[1].getType()==1):
 				first[1].setNumero(numero)
 				first[1].setTimer(tejec)
@@ -152,7 +153,7 @@ class Scheduler:
 			try:
 				process = heapq.heappop(self.ready)[1]
 				self.running = process
-				# print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
+				#print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
 				pass

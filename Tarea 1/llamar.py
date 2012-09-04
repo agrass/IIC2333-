@@ -9,8 +9,10 @@ class Llamar(Process):
 		self.hist = Historial()
 		if(numero == ""):
 			self.printsOnce = True
+			self.flag = True
 		else:
 			self.printsOnce = False
+			self.flag = False
 	def setNumero(self,numero):
 		self.numero = numero;
 	def getNumero(self):
@@ -35,7 +37,7 @@ class Llamar(Process):
 		f.close() 
 		self.hist.Actualizar('llamada saliente',self.numero, time)
 		
-		return True
+		return self.flag
 
 class recibirLlamada(Process):
 	def __init__(self,name,priority,numero,duracion):

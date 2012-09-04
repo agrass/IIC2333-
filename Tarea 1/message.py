@@ -49,8 +49,10 @@ class sendMessage(Process):
 		self.timer = int(0.02*len(message)) + 1
 		if (numero == ""):
 			self.printOnce=True
+			self.flag = True
 		else:
 			self.printOnce=False
+			self.flag = False
 		
 	def setNumero(self,numero):
 		self.numero = numero
@@ -79,7 +81,7 @@ class sendMessage(Process):
 		f.close() 
 		tiempo = datetime.datetime.now()
 		self.saveMessage(tiempo)
-		return True
+		return self.flag
 	def saveMessage(self,tiempo):		
 		f = open('data/sent_messages.txt', 'a+')		
 		f.write(str(tiempo)+' to: '+str(self.numero)+' => '+str(self.message))
