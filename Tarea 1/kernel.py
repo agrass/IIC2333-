@@ -89,13 +89,13 @@ class Kernel:
 			elif(input == "enviar_msje"):
 				self.enviarMsje(time)
 	def enviarMsje(self,time):
-		print "Waiting to send msge..."
+		print "Waiting to run send msg..."
 		process = sendMessage(0,"","")
 		self.scheduler.schedule(time,process,1)
 
 				
 	def hacerLlamada(self,time):
-		print "Waiting to make call..."
+		print "Waiting to run make call..."
 		processl = Llamar('hacer_llamada',0,"")
 		self.scheduler.schedule(time, processl,1)
 

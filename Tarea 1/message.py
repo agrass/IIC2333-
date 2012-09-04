@@ -38,7 +38,7 @@ class sendMessage(Process):
 		Process.__init__(self, "Send Message", 3, priority)		
 		self.message = message
 		self.numero = numero
-		self.timer = 20*len(message)
+		self.timer = int(0.02*len(message)) + 1
 		self.printOnce=True
 	def setNumero(self,numero):
 		self.numero = numero
@@ -46,7 +46,7 @@ class sendMessage(Process):
 		return self.numero
 	def setMsge(self,message):
 		self.message = message
-		self.timer = 20*len(self.message)
+		self.timer = int(0.02*len(message)) + 1
 	def runTimer(self):
 		if(self.numero == ""):
 			return False

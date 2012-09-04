@@ -58,7 +58,7 @@ class KernelConsole:
 		elif(self.hllamada):
 			numero = raw_input("Ingrese (numero;tiempollamada): ")
 		elif(self.emsje):
-			msje = raw_input("Ingrese numero;msje ")
+			msje = raw_input("Ingrese (numero;msje): ")
 		elif(self.waitbackend):
 			backend_msg = frontend_conn.recv()
 			if(backend_msg == "enable_input"):
