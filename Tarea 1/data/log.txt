@@ -1,0 +1,2 @@
+21 : 0 - hacer_llamada - LLamada finalizada
+40 : 1 - Send Message - Mensaje enviado

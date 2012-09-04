@@ -26,12 +26,8 @@ class StoreContact(Process):
 	def setContactNumber(self,contactNumber):
 		self.contactNumber = contactNumber
 
-	def finish(self,time):
-		f = open('data/log.txt', 'a')		
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
-		f.write("\n")		
-		f.close() 
-
+	def finish(self,time):		
+		self.writeLog("El contacto fue agregado con exito", time)
 		f = open('data/contact_list.txt', 'a')		
 		f.write( self.getContactName() + ":"+self.getContactNumber() )
 		f.write("\n")		

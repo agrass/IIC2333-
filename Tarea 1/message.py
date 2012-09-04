@@ -61,10 +61,7 @@ class sendMessage(Process):
 				return False
     #guardar output message  
 	def finish (self, time):
-		f = open('data/log.txt', 'a')		
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
-		f.write("\n")		
-		f.close() 
+		self.writeLog("Mensaje enviado", time)
 		print "Mensaje enviado!"
 		tiempo = datetime.datetime.now()
 		self.saveMessage(tiempo)

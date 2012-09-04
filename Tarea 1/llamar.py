@@ -24,13 +24,8 @@ class Llamar(Process):
 				return True
 	def setFin(self, fin):
 		self.fin= fin
-	def finish (self,time):
-		
-		f = open('data/log.txt', 'a')		
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
-		f.write("\n")		
-		f.close() 
-
+	def finish (self,time):		
+		self.writeLog("LLamada finalizada", time)
 		print "Llamada finalizada."
 		self.hist.Actualizar('llamada',self.numero, time)
 		
