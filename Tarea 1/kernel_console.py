@@ -62,6 +62,7 @@ class KernelConsole:
 		elif(self.waitbackend):
 			backend_msg = frontend_conn.recv()
 			if(backend_msg == "enable_input"):
+				print "Finalizado"
 				self.waitbackend = False
 				self.readingInput = True
 		else:

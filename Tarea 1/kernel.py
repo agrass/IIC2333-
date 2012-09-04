@@ -2,6 +2,7 @@ import time , sys, os
 from scheduler import Scheduler
 from process import Process
 from llamar import Llamar
+from llamar import recibirLlamada
 from store_contact import StoreContact
 from other import Other
 from send_position import SendPosition
@@ -10,6 +11,8 @@ from play import Play
 from music import Music
 from historial import Historial
 from message import sendMessage
+from message import receiveMessage
+
 
 class Kernel:
 
@@ -90,7 +93,7 @@ class Kernel:
 				self.enviarMsje(time)
 	def enviarMsje(self,time):
 		print "Waiting to run send msg..."
-		process = sendMessage(0,"","")
+		process = sendMessage("enviar_msje",0,"","")
 		self.scheduler.schedule(time,process,1)
 
 				
@@ -151,13 +154,14 @@ class Kernel:
 				delay = int(split[1])
 
 				if process_type == "1":
-					process = Process( split[0], split[2], split[3] )
+					process = Llamar( split[0], split[3] , split[4])
+					process.setTimer( split[5] )
 				elif process_type == "2":
-					process = Process( split[0], split[2], split[3] )
+					process = recibirLlamada( split[0], split[3], split[4], split[5] )
 				elif process_type == "3":
-					process = Process( split[0], split[2], split[3] )
+					process = sendMessage( split[0], split[3], split[5], split[4] )
 				elif process_type == "4":
-					process = Process( split[0], split[2], split[3] )
+					process = receiveMessage( split[0],split[3],split[5],split[4] )
 				elif process_type == "5":
 					process = StoreContact ( split[3] , split[0] , split[4].rstrip('\r\n') , split[5].rstrip('\r\n') )
 				elif process_type == "6":

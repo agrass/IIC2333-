@@ -19,27 +19,39 @@ def getSentMessages():
 
 #proceso recivir mensajes
 class receiveMessage(Process):
-	def __init__(self, priority, message= ""):
-		Process.__init__(self, 'Recive Message', 4, priority)
+	def __init__(self, name , priority, message, numero):
+		Process.__init__(self, name, 4, priority)
 		self.message = message
-		self.timer = 20 * len(message)
-		self.saveMessage()
+		self.numero = numero
+		self.timer = int(0.02* len(message))+1
     #guardar output message    
-	def saveMessage(self):		
+	def saveMessage(self,tiempo):		
 		f = open('data/received_messages.txt', 'a')		
-		f.write(self.message)
+		f.write(str(tiempo)+' from: '+str(self.numero)+' =>'+str(self.message))
 		f.write("\n")		
 		f.close() 
 
+	def finish (self, time):
+		f = open('data/log.txt', 'a')		
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
+		f.write("\n")		
+		f.close() 
+		tiempo = datetime.datetime.now()
+		self.saveMessage(tiempo)
+		return False
 
 #proceso mandar mensaje, tengo la duda con respecto a escribir mensaje en consola
 class sendMessage(Process):
-	def __init__(self, priority, message, numero):
-		Process.__init__(self, "Send Message", 3, priority)		
+	def __init__(self,name, priority, message, numero):
+		Process.__init__(self, name, 3, priority)		
 		self.message = message
 		self.numero = numero
 		self.timer = int(0.02*len(message)) + 1
-		self.printOnce=True
+		if (numero == ""):
+			self.printOnce=True
+		else:
+			self.printOnce=False
+		
 	def setNumero(self,numero):
 		self.numero = numero
 	def getNumero(self):
@@ -65,13 +77,12 @@ class sendMessage(Process):
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
-		print "Mensaje enviado!"
 		tiempo = datetime.datetime.now()
 		self.saveMessage(tiempo)
 		return True
 	def saveMessage(self,tiempo):		
 		f = open('data/sent_messages.txt', 'a+')		
-		f.write(str(tiempo)+' '+str(self.numero)+' '+str(self.message))
+		f.write(str(tiempo)+' to: '+str(self.numero)+' => '+str(self.message))
 		f.write("\r\n")		
 		f.close()    
 
