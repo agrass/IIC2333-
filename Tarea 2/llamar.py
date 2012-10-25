@@ -55,13 +55,14 @@ class recibirLlamada(Process):
 		self.external = {'Pantalla': 1, 'Audifono': 2, 'Microfono': 2, 'GPS': 0, 'Enviar Info': 1, 'Recibir Info': 1}
 
 	def finish (self,time):
-		
+		hora = datetime.datetime.now()
+		sthora = str(hora)
 		f = open('data/log.txt', 'a')		
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(hora)+' duration: '+str(time) )
 		f.write("\n")		
 		f.close() 
 
-		self.hist.Actualizar('llamada entrante',self.numero, time)
+		self.hist.Actualizar('llamada entrante',self.numero,sthora, time)
 
 
 		
