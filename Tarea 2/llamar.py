@@ -33,11 +33,14 @@ class Llamar(Process):
 		self.fin= fin
 	def finish (self,time):
 		
-		f = open('data/log.txt', 'a')
-		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
+		f = open('data/log.txt', 'a')	
+		hora = datetime.datetime.now()
+		sthora = str(hora)
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(hora)+' duration: '+str(time) )
+
 		f.write("\n")		
 		f.close() 
-		self.hist.Actualizar('llamada saliente',self.numero, time)
+		self.hist.Actualizar('llamada saliente',self.numero, sthora,time)
 		
 		return self.flag
 
