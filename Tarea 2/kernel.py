@@ -126,12 +126,14 @@ class Kernel:
 		os.system('cls' if os.name=='nt' else 'clear')
 		output = "Historial de Mensajes\n\n"
 		output += "Mensajes Recibidos:\n\n"
-		# AQUI HAY QUE IMPRIMIR LOS MENSAJES RECIBIDOS
-
-		print "Historial de Mensajes Enviados\n"
 		hist = Historial()
+		print 'Historial de Mensajes Recibidos\n'
+		hist.verHistorialMsgeRec()
+
+		print "\r\n Historial de Mensajes Enviados\r\n"
+		
 		hist.verHistorialMsge()
-		print  "\r\n \r\n ##### FIN HISTORIAL MENSAJES ENVIADOS ##### \r\n \r\n"
+		print  "\r\n \r\n ##### FIN HISTORIAL MENSAJES ##### \r\n \r\n"
 		
 	def readContactList(self,time):
 		os.system('cls' if os.name=='nt' else 'clear')
