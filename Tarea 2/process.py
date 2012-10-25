@@ -64,8 +64,8 @@ class Process:
 		return "".join(lineArray)
 
 	def writeLog(self, comment, time):
-		f = open('data/log.txt', 'a')		
-		f.write(str(time)+ " : " + str(self.getId()) + " - "+ self.getName() + " - " + comment )
+		f = open('data/log.txt', 'a')
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
 		
