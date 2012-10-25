@@ -1,4 +1,4 @@
-import multiprocessing , sys , time
+import multiprocessing , sys , time , os
 from kernel import Kernel 
 
 class KernelConsole:
@@ -24,9 +24,8 @@ class KernelConsole:
 
 
 	def clear(self):
-		sys.stdout.write('\033[2J')
-		sys.stdout.write('\033[H')
-		sys.stdout.flush()
+		os.system('cls' if os.name=='nt' else 'clear')
+
 
 	def printMenu(self):
 		print "\n###########	MENU  ########### \n"

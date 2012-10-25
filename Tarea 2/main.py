@@ -1,6 +1,8 @@
 import multiprocessing , sys , time
+from Tkinter import *
 from kernel import Kernel
 from kernel_console import KernelConsole
+from kernel_tkinter import Application
 
 if __name__ == "__main__":
 
@@ -23,6 +25,8 @@ if __name__ == "__main__":
 	with open("data/historial.txt", "w") as file:
 		file.truncate()
 
+	aroot = Tk()
+	app = Application(master=aroot)
 
 	#Objetos para comunicar front y back
 	backend_conn, frontend_conn = multiprocessing.Pipe()
@@ -33,6 +37,9 @@ if __name__ == "__main__":
 
 	kernel_console = KernelConsole()
 	kernel_console.run(frontend_conn,connQueue)
+
+	app.mainloop()
+	aroot.destroy()
 
 	#cProcess = multiprocessing.Process(target=runConsole, args=(k,))
 	#cProcess.start()

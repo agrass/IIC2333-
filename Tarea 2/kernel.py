@@ -91,6 +91,7 @@ class Kernel:
 				self.running = False
 			elif(input == "enviar_msje"):
 				self.enviarMsje(time)
+				
 	def enviarMsje(self,time):
 		print "Waiting to run send msg..."
 		process = sendMessage("enviar_msje",0,"","")
