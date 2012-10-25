@@ -9,6 +9,8 @@ class Process:
 		self.type = int(type)
 		self.priority = int(priority)
 		self.timer = 1
+		self.external = {'Pantalla': 0, 'Audifono': 0, 'Microfono': 0, 'GPS': 0, 'Enviar Info': 0, 'Recibir Info': 0}
+		self.original_priority = self.priority
 
 		Process.process_indexer += 1
 		
@@ -21,6 +23,9 @@ class Process:
 	def getType(self):
 		return self.type
 
+	def getExternals(self):
+		return self.external
+
 	def getTimer(self):
 		return int(self.timer)
 
@@ -32,6 +37,16 @@ class Process:
 
 	def setPriority(self, priority):
 		self.priority = priority
+
+	def getOriginalPriority(self):
+		return original_priority
+
+	def resetPriority(self):
+		self.priority = self.original_priority
+
+	def grow(self):
+		if(self.priority > 0):
+			self.priority -=1
 
 	def runTimer(self):
 		self.timer -= 1
@@ -65,7 +80,7 @@ class Process:
 
 	def writeLog(self, comment, time):
 		f = open('data/log.txt', 'a')		
-		f.write(str(time)+ " : " + str(self.getId()) + " - "+ self.getName() + " - " + comment )
+		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
 		

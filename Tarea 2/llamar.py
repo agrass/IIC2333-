@@ -7,6 +7,8 @@ class Llamar(Process):
 		Process.__init__(self,name,1,priority)
 		self.numero = numero;
 		self.hist = Historial()
+		# 0 no usa , 1 usa , 2 bloquea
+		self.external = {'Pantalla': 1, 'Audifono': 2, 'Microfono': 2, 'GPS': 0, 'Enviar Info': 1, 'Recibir Info': 1}
 		if(numero == ""):
 			self.printsOnce = True
 			self.flag = True
@@ -31,7 +33,7 @@ class Llamar(Process):
 		self.fin= fin
 	def finish (self,time):
 		
-		f = open('data/log.txt', 'a')		
+		f = open('data/log.txt', 'a')
 		f.write("finish : (" + str(self.getId()) + ") "+ self.getName() + " at time: "+ str(time) )
 		f.write("\n")		
 		f.close() 
@@ -40,11 +42,14 @@ class Llamar(Process):
 		return self.flag
 
 class recibirLlamada(Process):
+
 	def __init__(self,name,priority,numero,duracion):
 		Process.__init__(self,name,2,priority)
 		self.numero = numero;
 		self.hist = Historial()
 		self.timer = int(duracion)
+		# 0 no usa , 1 usa , 2 bloquea
+		self.external = {'Pantalla': 1, 'Audifono': 2, 'Microfono': 2, 'GPS': 0, 'Enviar Info': 1, 'Recibir Info': 1}
 
 	def finish (self,time):
 		

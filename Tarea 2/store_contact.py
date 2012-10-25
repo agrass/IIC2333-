@@ -5,6 +5,8 @@ class StoreContact(Process):
 		Process.__init__(self, name, 5, priority)
 		self.contactName = contactName
 		self.contactNumber = contactNumber
+		# 0 no usa , 1 usa , 2 bloquea
+		self.external = {'Pantalla': 1, 'Audifono': 0, 'Microfono': 0, 'GPS': 0, 'Enviar Info': 0, 'Recibir Info': 0}
 
 	def runTimer(self):
 		#means no number

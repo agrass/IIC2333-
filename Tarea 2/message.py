@@ -23,7 +23,10 @@ class receiveMessage(Process):
 		Process.__init__(self, name, 4, priority)
 		self.message = message
 		self.numero = numero
-		self.timer = int(0.02* len(message))+1
+		self.timer = int(0.02* len(message))+1	
+		# 0 no usa , 1 usa , 2 bloquea
+		self.external = {'Pantalla': 0, 'Audifono': 1, 'Microfono': 0, 'GPS': 0, 'Enviar Info': 1, 'Recibir Info': 1}
+
     #guardar output message    
 	def saveMessage(self,tiempo):		
 		f = open('data/received_messages.txt', 'a')		
@@ -47,6 +50,8 @@ class sendMessage(Process):
 		self.message = message
 		self.numero = numero
 		self.timer = int(0.02*len(message)) + 1
+		# 0 no usa , 1 usa , 2 bloquea
+		self.external = {'Pantalla': 0, 'Audifono': 1, 'Microfono': 0, 'GPS': 0, 'Enviar Info': 1, 'Recibir Info': 1}
 		if (numero == ""):
 			self.printOnce=True
 			self.flag = True
