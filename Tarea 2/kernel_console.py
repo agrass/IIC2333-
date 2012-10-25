@@ -3,13 +3,14 @@ from kernel import Kernel
 
 class KernelConsole:
 
-	def __init__(self):
+	def __init__(self,clocktime):
 		self.running = True
 		self.readingInput = True
 		self.writingContact = False
 		self.hllamada = False
 		self.waitbackend = False
 		self.emsje = False
+		self.clock = clocktime
 
 
 	def run(self, frontend_conn,connQueue):
@@ -118,4 +119,4 @@ class KernelConsole:
 			self.readingInput = False
 			self.waitbackend=True
 
-		time.sleep(1)
+		time.sleep(self.clock)

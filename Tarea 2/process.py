@@ -13,6 +13,8 @@ class Process:
 		self.original_priority = self.priority
 
 		Process.process_indexer += 1
+
+		self.blockedFlag = False
 		
 	def getId(self):
 		return self.id
@@ -34,6 +36,12 @@ class Process:
 
 	def getPriority(self):
 		return self.priority
+
+	def getBlockedFlag(self):
+		return self.blockedFlag
+
+	def setBlockedFlag(self,value):
+		self.blockedFlag = value
 
 	def setPriority(self, priority):
 		self.priority = priority

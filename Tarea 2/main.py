@@ -4,12 +4,14 @@ from kernel_console import KernelConsole
 
 if __name__ == "__main__":
 
-	def runKernel(backend_conn,connQueue):
-		kernel = Kernel()
+	def runKernel(backend_conn,connQueue,clocktime):
+		kernel = Kernel(clocktime)
 		kernel.run(backend_conn,connQueue)
 
 	def runConsole():
 		pass
+
+	clocktime = 0.5
 
 	#Clear todo
 	with open("data/log.txt", "w") as file:
@@ -26,10 +28,10 @@ if __name__ == "__main__":
 	backend_conn, frontend_conn = multiprocessing.Pipe()
 	connQueue = multiprocessing.Queue()
 
-	kProcess = multiprocessing.Process(target=runKernel, args=(backend_conn,connQueue))
+	kProcess = multiprocessing.Process(target=runKernel, args=(backend_conn,connQueue,clocktime))
 	kProcess.start()
 
-	kernel_console = KernelConsole()
+	kernel_console = KernelConsole(clocktime)
 	kernel_console.run(frontend_conn,connQueue)
 
 	#cProcess = multiprocessing.Process(target=runConsole, args=(k,))

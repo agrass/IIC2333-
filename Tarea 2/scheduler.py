@@ -15,8 +15,8 @@ class Scheduler:
 		self.running = None
 		#lista de procesos terminados
 		self.finish = []
-		#locks para los perifericos 1 locked 0 unlocked
-		self.locks = {'Pantalla': 0, 'Audifono': 0, 'Microfono': 0, 'GPS': 0, 'Enviar Info': 0, 'Recibir Info': 0}
+		#locks para los perifericos Process = locked None = unlocked
+		self.locks = {'Pantalla': None, 'Audifono': None, 'Microfono': None, 'GPS': None, 'Enviar Info': None, 'Recibir Info': None}
 		#tiempo para cada ronda
 		self.roundRobinTime = 2
 
@@ -29,6 +29,8 @@ class Scheduler:
 		self.rrtimer = self.roundRobinTime
 		
 		self.enableInput=False
+
+		self.processWaitingForInput = None
 
 	def setAskingForInput(self, value):
 		self.askingForInput = value
@@ -64,7 +66,7 @@ class Scheduler:
 		self.processReady(time)
 		self.processWaiting(time)
 		#Envejecimiento
-		if (time % 2 == 0):
+		if (time % 5 == 0):
 			self.growOlder()
 
 	def processNew(self,time):
@@ -76,7 +78,7 @@ class Scheduler:
 				if( first[0] == time ):
 					process = heapq.heappop(self.new)[1]
 					count = next(self.counter)
-					heapq.heappush(self.ready, (process.getPriority() ,count, process) )
+					heapq.heappush(self.ready, [process.getPriority() ,count, process] )
 
 					#print str(time) +": to ready " + str( process.getId() ) + " > " + process.getName()
 				else:
@@ -94,7 +96,9 @@ class Scheduler:
 			if ( self.running.runTimer() == False):
 				self.rrtimer = self.roundRobinTime
 				#print str(time) +": to waiting " + str( self.running.getId() ) + " > " + self.running.getName()
-				heapq.heappush(self.waiting, (self.running.getPriority() ,  self.running))
+				entry = [self.running.getPriority() ,  self.running]
+				heapq.heappush(self.waiting, entry )
+				self.processWaitingForInput = entry
 				self.running = None
 			#finish process
 			elif(self.running.timer == 0):
@@ -113,35 +117,50 @@ class Scheduler:
 					self.rrtimer = self.roundRobinTime
 					self.running.resetPriority()
 					count = next(self.counter)
-					heapq.heappush(	self.ready, (self.running.getPriority(),count, self.running)	)
-					self.running = heapq.heappop(self.ready)[2]
+					heapq.heappush(	self.ready, [self.running.getPriority(),count, self.running]	)
+					self.running = None
 
 	def processWaiting(self,time):
-		try:
-			first = self.waiting[0]
 
-			if( self.askingForInput == False  and self.writingInput == False ):
-				self.askingForInput = True
+		for item in self.waiting :
 
-		except IndexError: 
-				pass
+			if(item[1].getBlockedFlag()):
+
+				externals = item[1].getExternals()
+				isBlocked = False
+
+				for key in externals :
+					if( (externals[key] == 2 or externals[key] == 1) and (self.locks[key] != None) ): # Blocked
+						isBlocked=True
+
+				if(	not isBlocked ):
+					item[1].setBlockedFlag(False)
+					count = next(self.counter)
+					heapq.heappush(	self.ready, [item[1].getPriority(), count, item[1]]	)
+					self.waiting.remove(item)
+
+		if( self.processWaitingForInput != None and self.askingForInput == False  and self.writingInput == False ):
+			self.askingForInput = True
+
 
 	def growOlder(self):
 		for item in self.ready :
 			item[2].grow()
+			item[0] = item[2].getPriority()
 
 	def newContactInput(self,time ,contactName,contactNumber):
 		try:
-			first = self.waiting[0]
+			first = self.processWaitingForInput[1]
 
-			if(first[1].getType()==5):
-				first[1].setContactName(contactName)
-				first[1].setContactNumber(contactNumber)
+			if(first.getType()==5):
+				first.setContactName(contactName)
+				first.setContactNumber(contactNumber)
 				self.askingForInput = False
 				self.writingInput = False
-				process = heapq.heappop(self.waiting)[1]
+				self.waiting.remove(self.processWaitingForInput)
 				count = next(self.counter)
-				heapq.heappush(self.ready, (process.getPriority() ,count, process) )
+				heapq.heappush(self.ready, [first.getPriority() ,count, first] )
+				self.processWaitingForInput= None
 			else:
 				raise IndexError
 
@@ -150,16 +169,18 @@ class Scheduler:
 
 	def llamar(self,time,numero,tejec):
 		try:
-			first = self.waiting[0]
+			first = self.processWaitingForInput[1]
 
-			if(first[1].getType()==1):
-				first[1].setNumero(numero)
-				first[1].setTimer(tejec)
+			if(first.getType()==1):
+				first.setNumero(numero)
+				first.setTimer(tejec)
+				first.setDuracion(tejec)
 				self.askingForInput = False
 				self.writingInput = False
-				process = heapq.heappop(self.waiting)[1]
+				self.waiting.remove(self.processWaitingForInput)
 				count = next(self.counter)
-				heapq.heappush(self.ready, (process.getPriority(),count, process))
+				heapq.heappush(self.ready, [first.getPriority(),count, first])
+				self.processWaitingForInput= None
 			else:
 				raise IndexError
 		except IndexError:
@@ -167,15 +188,16 @@ class Scheduler:
 
 	def mensaje(self,time,numero,mensaje):
 		try:
-			first = self.waiting[0]
-			if(first [1].getType() == 3):
-				first[1].setNumero(numero)
-				first[1].setMsge(mensaje)
+			first = self.processWaitingForInput[1]
+			if(first.getType() == 3):
+				first.setNumero(numero)
+				first.setMsge(mensaje)
 				self.askingForInput = False
 				self.writingInput = False
-				process = heapq.heappop(self.waiting)[1]
+				self.waiting.remove(self.processWaitingForInput)
 				count = next(self.counter)
-				heapq.heappush(self.ready, (process.getPriority(), count, process))
+				heapq.heappush(self.ready, [first.getPriority(), count, first])
+				self.processWaitingForInput= None
 			else:
 				raise IndexError
 		except IndexError:
@@ -185,24 +207,42 @@ class Scheduler:
 		if(self.running == None):
 			try:
 				process = heapq.heappop(self.ready)[2]
-				self.running = process
-				self.aquireLocks(self.running)
-				#print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
+				
+				externals = process.getExternals()
+				isBlocked = False
+				for key in externals :
+						if( (externals[key] == 2 or externals[key] == 1) and (self.locks[key] != None) ): # Blocked
+							if( not (self.locks[key] == process) ):
+								isBlocked=True
+				if(isBlocked):
+					#print "["+str(time)+"] "+str(process.getId()) + " is Blocked"
+					process.resetPriority()
+					process.setBlockedFlag(True)
+					entry = [process.getPriority() ,  process]
+					heapq.heappush(self.waiting, entry )
+					self.processReady(time)
+				else:
+					#print "["+str(time)+"] "+str(process.getId()) + " is not Blocked"
+					self.running = process
+					self.aquireLocks(self.running)
+					#print str(time) +": to running " + str( process.getId() ) + " > " + process.getName()
 
 			except IndexError: 
 				pass
+				#print "["+str(time)+"] None in ready"
 
 	def aquireLocks(self,process):
 		externals = process.getExternals()
 		for key in externals :
+
 			if(externals[key] == 2) :# Block
-				self.locks[key] == 1
+				self.locks[key] = process
 
 	def releaseLocks(self,process):
 		externals = process.getExternals()
 		for key in externals :
-			if(externals[key] == 2) :# Block
-				self.locks[key] == 0
+			if(externals[key] == 2 and self.locks[key] == process) :# Block
+				self.locks[key] = None
 
 	def printProcesses(self, timer):
 		output = ""
@@ -213,9 +253,15 @@ class Scheduler:
 		if(self.running != None):
 			output += self.running.printProcess("RUN") + "\n"
 		for item in self.ready:
-			output += item[2].printProcess("RDY") + "\n"
+			output += item[2].printProcess("RDY")+"\n"
 		for item in self.waiting:
-			output += item[2].printProcess("WTN") + "\n"
-
+			output += item[1].printProcess("WTN") + "\n"
+		output += "\n [ "
+		for key in self.locks :
+			if(self.locks[key]):
+				output += key + ": "+str(self.locks[key].getId())+" "
+			else:
+				output += key + ": None "
+		output += "] \n"
 		output += "\nPress enter to stop..."
 		return output

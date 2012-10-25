@@ -13,13 +13,13 @@ from historial import Historial
 from message import sendMessage
 from message import receiveMessage
 
-
 class Kernel:
 
-	def __init__(self):
+	def __init__(self,clocktime):
 		self.scheduler = Scheduler()
 		self.running = True
 		self.topActive = False
+		self.clock = clocktime
 
 	def run(self,backend_conn,connQueue):
 		self.i=0
@@ -47,7 +47,7 @@ class Kernel:
 			if(self.topActive == True):
 				self.top()
 			
-			time.sleep(1)
+			time.sleep(self.clock)
 
 	def checkInput(self,time, connQueue):
 		try:
@@ -158,6 +158,7 @@ class Kernel:
 				if process_type == "1":
 					process = Llamar( split[0], split[3] , split[4])
 					process.setTimer( split[5] )
+					process.setDuracion( split[5] )
 				elif process_type == "2":
 					process = recibirLlamada( split[0], split[3], split[4], split[5] )
 				elif process_type == "3":
