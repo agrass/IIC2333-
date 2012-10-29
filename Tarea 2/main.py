@@ -3,7 +3,6 @@ from kernel import Kernel
 from kernel_console import KernelConsole
 
 if __name__ == "__main__":
-
 	def runKernel(backend_conn,connQueue,clocktime):
 		kernel = Kernel(clocktime)
 		kernel.run(backend_conn,connQueue)
@@ -11,7 +10,7 @@ if __name__ == "__main__":
 	def runConsole():
 		pass
 
-	clocktime = 0.5
+	clocktime = 1.0
 
 	#Clear todo
 	with open("data/log.txt", "w") as file:
